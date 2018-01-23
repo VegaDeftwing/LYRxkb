@@ -1,0 +1,75 @@
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//   `Yb                       .dP'       db                        `Yb    .dp'     ,         d'b,,',,d'b
+//    88                     dP'       db    db                      88  dp'         88b
+//    88              "Ybaaaaaaaaad8'                                88                 '    "Ybaaaaaaaaad8'
+//    88 d88b d88b     .dP'  dP'  88     'Yb        `Yb.d88b d88b    88.d88b.    `Yb.d888b    .dP'  dP'  88
+//    88P   8Y   8b    88   88    88      88         88'   8Y   8b   88P'   Y8    88'    8Y   88   88    88
+//    88    8P   88    Y8   Y8   .88      88         88    8P   88   88     8P    88     8P   Y8   Y8   .88
+//    88  .dP' .dP'    `Y88P`Y88P'88     .8P         88  ,dP  ,dP    88   ,dP     88   ,dP     Y88P`Y88P'88
+//    8888888888888b.             88                 88             .888888888b.  88                     88
+//                                88                 88                           88                     88
+//                                Y8.               .8P                          .8P                     Y8.
+//
+// Vega Deftwing User File №0-003
+// File Name and Typical Location
+// ##Name## Math Space Cadet Dvorak
+// ##Loc.## USE ****MODIFIED***** INSTALL.SH provided form http://freetengwar.sourceforge.net/ 's normal Installation
+//
+//A RowAlphanumbericindc keynumericindic
+xkb_symbols "basic"
+{
+		name[Group1] = "Dvocadetmath";
+		key <TLDE> { [       grave,	U2248, dead_grave, dead_tilde	] };
+
+		key <AE01> { [	    1,	exclam 		]	};
+		key <AE02> { [	    2,	at		]	};
+		key <AE03> { [	    3,	numbersign	]	};
+		key <AE04> { [	    4,	dollar		]	};
+		key <AE05> { [	    5,	percent		]	};
+		key <AE06> { [	    6,	asciicircum, dead_circumflex, dead_circumflex ]	};
+		key <AE07> { [	    7,	ampersand	]	};
+		key <AE08> { [	    8,	U00D7	]	};
+		key <AE09> { [	    9,	parenleft,  dead_grave]	};
+		key <AE10> { [	    U2205,	parenright	]	};
+		key <AE11> { [ U2282,	U2284	]	};
+		key <AE12> { [ U2283, U2285,  dead_tilde] };
+
+		key <AD01> { [  apostrophe,	quotedbl, dead_acute, dead_diaeresis	] };
+		key <AD02> { [	comma,	U2264,   dead_cedilla, dead_caron	] };
+		key <AD03> { [      U00B7,	U2265, dead_abovedot, periodcentered	] };
+		key <AD04> { [	    p,	P		]	};
+		key <AD05> { [	    y,	Y		]	};
+		key <AD06> { [	    U222B,	F		]	};
+		key <AD07> { [	    g,	G		]	};
+		key <AD08> { [	    U2218,	U2102		]	};
+		key <AD09> { [	    U211A,	U211D		]	};
+		key <AD10> { [	    l,	L		]	};
+		key <AD11> { [	slash,	question	]	};
+		key <AD12> { [	U2260,	U00B1		]	};
+
+		key <AC01> { [	    U22C0,	U2135 		]	};
+		key <AC02> { [	    U2228,	O		]	};
+		key <AC03> { [	    U2208,	U2209		]	};
+		key <AC04> { [	    U222A,	U		]	};
+		key <AC05> { [	    U2229,	U221E		]	};
+		key <AC06> { [	    U0362,	U219B		]	};
+		key <AC07> { [	    U20EA,	U219A		]	};
+		key <AC08> { [	    U034D,	U21AE		]	};
+		key <AC09> { [	    U20E1,	U2115		]	};
+		key <AC10> { [	    s,	S		]	};
+		key <AC11> { [	U00AC,	underscore	]	};
+
+		key <AB01> { [   semicolon,	colon, dead_ogonek, dead_doubleacute ] };
+		key <AB02> { [	    q,	Q		]	};
+		key <AB03> { [	    j,	J		]	};
+		key <AB04> { [	    k,	K		]	};
+		key <AB05> { [	    U22BB,	X		]	};
+		key <AB06> { [	    b,	B		]	};
+		key <AB07> { [	    m,	M		]	};
+		key <AB08> { [	    w,	W		]	};
+		key <AB09> { [	    v,	V		]	};
+		key <AB10> { [	    z,	U2124		]	};
+
+		key <BKSL> { [  U00F7,  bar             ]       };
+};

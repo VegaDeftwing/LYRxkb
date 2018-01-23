@@ -1,0 +1,75 @@
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//   `Yb                       .dP'       db                        `Yb    .dp'     ,         d'b,,',,d'b
+//    88                     dP'       db    db                      88  dp'         88b
+//    88              "Ybaaaaaaaaad8'                                88                 '    "Ybaaaaaaaaad8'
+//    88 d88b d88b     .dP'  dP'  88     'Yb        `Yb.d88b d88b    88.d88b.    `Yb.d888b    .dP'  dP'  88
+//    88P   8Y   8b    88   88    88      88         88'   8Y   8b   88P'   Y8    88'    8Y   88   88    88
+//    88    8P   88    Y8   Y8   .88      88         88    8P   88   88     8P    88     8P   Y8   Y8   .88
+//    88  .dP' .dP'    `Y88P`Y88P'88     .8P         88  ,dP  ,dP    88   ,dP     88   ,dP     Y88P`Y88P'88
+//    8888888888888b.             88                 88             .888888888b.  88                     88
+//                                88                 88                           88                     88
+//                                Y8.               .8P                          .8P                     Y8.
+//
+// Vega Deftwing User File №0-003
+// File Name and Typical Location
+// ##Name## Greek Space Cadet Dvorak
+// ##Loc.## USE ****MODIFIED***** INSTALL.SH provided form http://freetengwar.sourceforge.net/ 's normal Installation
+//
+//A RowAlphanumbericindc keynumericindic
+xkb_symbols "basic"
+{
+		name[Group1] = "Dvocadetgreek";
+		key <TLDE> { [       grave,	asciitilde, dead_grave, dead_tilde	] };
+
+		key <AE01> { [	    1,	U00A1 		]	};
+		key <AE02> { [	    2,	U00A7		]	};
+		key <AE03> { [	    3,	U2116	]	};
+		key <AE04> { [	    4,	U20AC		]	};
+		key <AE05> { [	    5,	U2030		]	};
+		key <AE06> { [	    6,	asciicircum, dead_circumflex, dead_circumflex ]	};
+		key <AE07> { [	    7,	ampersand	]	};
+		key <AE08> { [	    8,	asterisk	]	};
+		key <AE09> { [	    9,	parenleft,  dead_grave]	};
+		key <AE10> { [	    0,	parenright	]	};
+		key <AE11> { [ bracketleft,	braceleft	]	};
+		key <AE12> { [ bracketright, braceright,  dead_tilde] };
+
+		key <AD01> { [  apostrophe,	quotedbl, dead_acute, dead_diaeresis	] };
+		key <AD02> { [	comma,	less,   dead_cedilla, dead_caron	] };
+		key <AD03> { [      period,	greater, dead_abovedot, periodcentered	] };
+		key <AD04> { [	    U03C0,	U03A0		]	};
+		key <AD05> { [	    U03C8,	U03A8		]	};
+		key <AD06> { [	    U03C6,	U03A6		]	};
+		key <AD07> { [	    U03B3,	U0393		]	};
+		key <AD08> { [	    U03C7,	U03A7		]	};
+		key <AD09> { [	    U03C1,	U03A1		]	};
+		key <AD10> { [	    U03BB,	U039B		]	};
+		key <AD11> { [	slash,	question	]	};
+		key <AD12> { [	equal,	plus		]	};
+
+		key <AC01> { [	    U03B1,	U0391 		]	};
+		key <AC02> { [	    U03BF,	U039F		]	};
+		key <AC03> { [	    U03B5,	U0395		]	};
+		key <AC04> { [	    U03C5,	U03A5		]	};
+		key <AC05> { [	    U03B9,	U0399		]	};
+		key <AC06> { [	    U03B4,	U0394		]	};
+		key <AC07> { [	    U03B7,	U0397		]	};
+		key <AC08> { [	    U03C4,	U03A4		]	};
+		key <AC09> { [	    U03BD,	U039D		]	};
+		key <AC10> { [	    U03C3,	U03A3		]	};
+		key <AC11> { [	minus,	underscore	]	};
+
+		key <AB01> { [   semicolon,	colon, dead_ogonek, dead_doubleacute ] };
+		key <AB02> { [	    U03B8,	U0398		]	};
+		key <AB03> { [	    U03D1,	U0398		]	};
+		key <AB04> { [	    U03BA,	U039A		]	};
+		key <AB05> { [	    U03BE,	U039E		]	};
+		key <AB06> { [	    U03B2,	U0392		]	};
+		key <AB07> { [	    U03BC,	U039C		]	};
+		key <AB08> { [	    U03C9,	U03A9		]	};
+		key <AB09> { [	    U03C2,	U03A3		]	};
+		key <AB10> { [	    U03B6,	U0396		]	};
+
+		key <BKSL> { [  backslash,  bar             ]       };
+};
