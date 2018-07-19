@@ -166,7 +166,6 @@ def makeblock(mapDict, layoutDict):
         keyfmt = "\tkey " + key + " {"
         for key2,val2 in layoutDict.items():
             if val == key2:
-                print(val2)
                 layerone = val2
             #print(key2 + "," + val2 + "," + val)
         #print("{} = {}".format(key, val))
