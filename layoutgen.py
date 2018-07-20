@@ -1,6 +1,6 @@
 import os
 ## enter your keymap choice here, valid options are QWERTY and Dvorak
-layout = "DVORAK"
+layout = "QWERTY"
 name = "cadet"
 
 mapDict = {
@@ -93,7 +93,26 @@ capsDict = {"a":"A","b":"B","c":"C","d":"D","e":"E","f":"F","g":"G","h":"H","i":
 }
 # http://stevelosh.com/blog/2012/10/a-modern-space-cadet/
 greekDict = {
-    "a":"α"
+            "0": "0",  "1": "1",  "2": "2",  "3": "3",
+            "4": "4",  "5": "5",  "6": "6",  "7": "7",
+            "8": "8",  "9": "9",  "/": "/",  "+": "+",
+            "=": "=",  "?": "?",  "]": "]",  "}": "}",
+            "[": "[",  "{": "{",  "π": "p",  "Π": "P",
+            "ο": "o",  "Ο": "O",  "ι": "i",  "Ι": "I",
+            "υ": "u",  "Υ": "U",  "ψ": "y",  "Ψ": "Y",
+            "τ": "t",  "Τ": "T",  "ρ": "r",  "Ρ": "R",
+            "ε": "e",  "Ε": "E",  "ω": "w",  "Ω": "W",
+            "θ": "q",  "Θ": "Q",  "'": "'",  '"': '"',
+            ";": ";",  ":": ":",  "λ": "Λ",  "L": "L",
+            "κ": "k",  "Κ": "K",  "ϑ": "j",  "J": "J",
+            "η": "h",  "Η": "H",  "γ": "g",  "Γ": "G",
+            "φ": "f",  "Φ": "F",  "δ": "d",  "Δ": "D",
+            "σ": "s",  "Σ": "S",  "α": "a",  "Α": "A",
+            "/": "/",  "?": "?",  ".": ".",  ">": ">",
+            ",": ",",  "<": "<",  "μ": "m",  "Μ": "M",
+            "ν": "n",  "Ν": "N",  "β": "b",  "Β": "B",
+            "ς": "v",  "V": "V",  "χ": "c",  "Χ": "C",
+            "ξ": "x",  "Ξ": "X",  "ζ": "z",  "Ζ": "Z",
 }
 # http://stevelosh.com/blog/2012/10/a-modern-space-cadet/
 symbolicDict = {
@@ -119,14 +138,18 @@ largecharDict = {
 def makeblock(mapDict, layoutDict):
     block = ""
     for key, val in mapDict.items():
-        layerone = ""
+        layerone = layertwo = ""
         keyfmt = "\tkey " + key + " {"
+        for key2, val2 in layoutDict.items():
+            if val == key2:
+                layerone = val2
+                layertwo = layoutDict[val2.capitalize()]
         for key2, val2 in layoutDict.items():
             if val == key2:
                 layerone = val2
             #print(key2 + "," + val2 + "," + val)
         #print("{} = {}".format(key, val))
-        block = block + keyfmt + "\t[ " + layerone + " ]" + "};\n"
+        block = block + keyfmt + "\t[ " + layerone + ", " + layertwo + " ]" + "};\n"
     return(block)
 
 
