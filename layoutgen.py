@@ -53,13 +53,12 @@ mapDict = {
     '\\': '<BKSL>'
 }
 
-# if using US-Qwerty, then the
-# layout as defined by the mapDict is technically correct,
-# however, for code simplicity it is redfiend
-# with a rudunant dictionary below.
-# if you are using a key map not provided in this file it may be
-# eaiset to simple find how your board maps to qwerty and define it
-# overtop the qwerty definition
+# if using US-Qwerty, then the layout as defined by the mapDict is technically
+# correct, however, for code simplicity it is redefined with a redundant
+# dictionary below.
+# if you are using a key map not provided in this file it may be eaiset to
+# simple find how your board maps to qwerty and define it overtop the qwerty
+# definition
 if layout == "QWERTY":
     layoutDict = {
         "0": "0",  "1": "1",  "2": "2",  "3": "3",
