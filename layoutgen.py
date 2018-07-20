@@ -4,30 +4,53 @@ layout = "QWERTY"
 name = "cadet"
 
 mapDict = {
-    "<TLDE>": "grave",
-    "<AE01>": "1", "<AE02>": "2",
-    "<AE03>": "3", "<AE04>": "4",
-    "<AE05>": "5", "<AE06>": "6",
-    "<AE07>": "7", "<AE08>": "8",
-    "<AE09>": "9", "<AE10>": "0",
-    "<AE11>": "-", "<AE12>": "=",
-    "<AD01>": "q", "<AD02>": "w",
-    "<AD03>": "e", "<AD04>": "r",
-    "<AD05>": "t", "<AD06>": "y",
-    "<AD07>": "u", "<AD08>": "i",
-    "<AD09>": "o", "<AD10>": "p",
-    "<AD11>": "[", "<AD12>": "]",
-    "<AC01>": "a", "<AC02>": "s",
-    "<AC03>": "d", "<AC04>": "f",
-    "<AC05>": "g", "<AC06>": "h",
-    "<AC07>": "j", "<AC08>": "k",
-    "<AC09>": "l", "<AC10>": ";",
-    "<AC11>": "'", "<AB01>": "z",
-    "<AB02>": "x", "<AB03>": "c",
-    "<AB04>": "v", "<AB05>": "b",
-    "<AB06>": "n", "<AB07>": "m",
-    "<AB08>": ",", "<AB09>": ".",
-    "<AB10>": "/", "<BKSL>": "\\",
+'grave': '<TLDE>',
+    '1': '<AE01>',
+    '2': '<AE02>',
+    '3': '<AE03>',
+    '4': '<AE04>',
+    '5': '<AE05>',
+    '6': '<AE06>',
+    '7': '<AE07>',
+    '8': '<AE08>',
+    '9': '<AE09>',
+    '0': '<AE10>',
+    '-': '<AE11>',
+    '=': '<AE12>',
+    'q': '<AD01>',
+    'w': '<AD02>',
+    'e': '<AD03>',
+    'r': '<AD04>',
+    't': '<AD05>',
+    'y': '<AD06>',
+    'u': '<AD07>',
+    'i': '<AD08>',
+    'o': '<AD09>',
+    'p': '<AD10>',
+    '[': '<AD11>',
+    ']': '<AD12>',
+    'a': '<AC01>',
+    's': '<AC02>',
+    'd': '<AC03>',
+    'f': '<AC04>',
+    'g': '<AC05>',
+    'h': '<AC06>',
+    'j': '<AC07>',
+    'k': '<AC08>',
+    'l': '<AC09>',
+    ';': '<AC10>',
+    "'": '<AC11>',
+    'z': '<AB01>',
+    'x': '<AB02>',
+    'c': '<AB03>',
+    'v': '<AB04>',
+    'b': '<AB05>',
+    'n': '<AB06>',
+    'm': '<AB07>',
+    ',': '<AB08>',
+    '.': '<AB09>',
+    '/': '<AB10>',
+    '\\': '<BKSL>'
 }
 
 # if using US-Qwerty, then the
@@ -134,20 +157,21 @@ largecharDict = {
 }
 
 # https://en.wikipedia.org/wiki/Tengwar http://freetengwar.sourceforge.net/mapping.html
-
+def invertdict(toinvert):
+    inverted_dict = dict([[v,k] for k,v in toinvert.items()])
+    print(inverted_dict)
 
 def makeblock(mapDict, layoutDict):
     block = ""
-    for key, val in mapDict.items():
+    for val, key in mapDict.items():
         layerone = layertwo = ""
         keyfmt = "\tkey " + key + " {"
         for key2, val2 in layoutDict.items():
             if val == key2:
                 layerone = val2
-                layertwo = layoutDict[val2.capitalize()]
         for key2, val2 in layoutDict.items():
-            if val == key2:
-                layerone = val2
+            if val.capitalize() == key2:
+                layertwo = val2
             #print(key2 + "," + val2 + "," + val)
         #print("{} = {}".format(key, val))
         block = block + keyfmt + "\t[ " + layerone + ", " + layertwo + " ]" + "};\n"
