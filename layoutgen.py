@@ -4,7 +4,7 @@ layout = "QWERTY"
 name = "cadet"
 
 mapDict = {
-'grave': '<TLDE>',
+    "`": '<TLDE>',
     '1': '<AE01>',
     '2': '<AE02>',
     '3': '<AE03>',
@@ -164,6 +164,7 @@ greekDict = {
             "ν": "n",  "Ν": "N",  "β": "b",  "Β": "B",
             "ς": "v",  "V": "V",  "χ": "c",  "Χ": "C",
             "ξ": "x",  "Ξ": "X",  "ζ": "z",  "Ζ": "Z",
+            "`": "`"
 }
 # http://stevelosh.com/blog/2012/10/a-modern-space-cadet/
 symbolicDict = {
@@ -184,6 +185,12 @@ largecharDict = {
 }
 
 # https://en.wikipedia.org/wiki/Tengwar http://freetengwar.sourceforge.net/mapping.html
+def tounicode(key):
+    if key == "":
+        return("NoSymbol")
+    key = "U"+hex(ord(key))[2:].zfill(4)
+    return(key)
+
 def invertdict(toinvert):
     inverted_dict = dict([[v,k] for k,v in toinvert.items()])
     return(inverted_dict)
@@ -199,6 +206,9 @@ def makeblock(mapDict, layoutDictL, layoutDictU, layerthreeopt):
                 layertwo = layoutDictU[val2]
                 layerthree = layerthreeopt[val2]
         keyfmt = "\tkey " + key + " {"
+        layerone = tounicode(layerone)
+        layertwo = tounicode(layertwo)
+        layerthree = tounicode(layerthree)
         block = block + keyfmt + "\t[ " + layerone + ", " + layertwo + ", " + layerthree + " ]" + "};\n"
     return(block)
 
