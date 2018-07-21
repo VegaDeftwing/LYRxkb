@@ -50,7 +50,7 @@ mapDict = {
     ',': '<AB08>',
     '.': '<AB09>',
     '/': '<AB10>',
-    '\\': '<BKSL>'
+    '\\': '<BKSL>',
 }
 
 # if using US-Qwerty, then the layout as defined by the mapDict is technically
@@ -60,30 +60,58 @@ mapDict = {
 # simple find how your board maps to qwerty and define it overtop the qwerty
 # definition
 if layout == "QWERTY":
-    layoutDict = {
-        "0": "0",  "1": "1",  "2": "2",  "3": "3",
-        "4": "4",  "5": "5",  "6": "6",  "7": "7",
-        "8": "8",  "9": "9",  "/": "/",  "+": "+",
-        "=": "=",  "?": "?",  "]": "]",  "}": "}",
-        "[": "[",  "{": "{",  "p": "p",  "P": "P",
-        "o": "o",  "O": "O",  "i": "i",  "I": "I",
-        "u": "u",  "U": "U",  "y": "y",  "Y": "Y",
-        "t": "t",  "T": "T",  "r": "r",  "R": "R",
-        "e": "e",  "E": "E",  "w": "w",  "W": "W",
-        "q": "q",  "Q": "Q",  "'": "'",  '"': '"',
-        ";": ";",  ":": ":",  "l": "l",  "L": "L",
-        "k": "k",  "K": "K",  "j": "j",  "J": "J",
-        "h": "h",  "H": "H",  "g": "g",  "G": "G",
-        "f": "f",  "F": "F",  "d": "d",  "D": "D",
-        "s": "s",  "S": "S",  "a": "a",  "A": "A",
-        "/": "/",  "?": "?",  ".": ".",  ">": ">",
-        ",": ",",  "<": "<",  "m": "m",  "M": "M",
-        "n": "n",  "N": "N",  "b": "b",  "B": "B",
-        "v": "v",  "V": "V",  "c": "c",  "C": "C",
-        "x": "x",  "X": "X",  "z": "z",  "Z": "Z",
+    layoutDictL = {
+        "0": "0",  "1": "1",
+        "2": "2",  "3": "3",
+        "4": "4",  "5": "5",
+        "6": "6",  "7": "7",
+        "8": "8",  "9": "9",
+        "/": "/", "`": "`",
+        "=": "=", "]": "]",
+        "[": "[", "p": "p",
+        "o": "o", "i": "i",
+        "u": "u", "y": "y",
+        "t": "t", "r": "r",
+        "e": "e", "w": "w",
+        "q": "q", "'": "'",
+        ";": ";", "l": "l",
+        "k": "k", "j": "j",
+        "h": "h", "g": "g",
+        "f": "f", "d": "d",
+        "s": "s", "a": "a",
+        "/": "/", ".": ".",
+        ",": ",", "m": "m",
+        "n": "n", "b": "b",
+        "v": "v", "c": "c",
+        "x": "x", "z": "z",
+    }
+    layoutDictU = {
+        "0": ")",  "1": "!",
+        "2": "@",  "3": "#",
+        "4": "$",  "5": "%",
+        "6": "^",  "7": "&",
+        "8": "*",  "9": "(",
+        "/": "?", "`":"~",
+        "=": "+", "]": "}",
+        "[": "{", "p": "P",
+        "o": "O", "i": "I",
+        "u": "U", "y": "Y",
+        "t": "T", "r": "R",
+        "e": "E", "w": "W",
+        "q": "Q", "'": '"',
+        ";": ":", "l": "L",
+        "k": "K", "j": "J",
+        "h": "H", "g": "G",
+        "f": "F", "d": "D",
+        "s": "S", "a": "A",
+        "/": "?", ".": ">",
+        ",": "<", "m": "M",
+        "n": "N", "b": "B",
+        "v": "V", "c": "C",
+        "x": "X", "z": "Z",
     }
 elif layout == "DVORAK":
-    layoutDict = {
+    layoutDictL = {
         "0": "0",  "1": "1",  "2": "2",  "3": "3",
         "4": "4",  "5": "5",  "6": "6",  "7": "7",
         "8": "8",  "9": "9",  "]": "/",  "}": "+",
@@ -126,7 +154,7 @@ greekDict = {
             "τ": "t",  "Τ": "T",  "ρ": "r",  "Ρ": "R",
             "ε": "e",  "Ε": "E",  "ω": "w",  "Ω": "W",
             "θ": "q",  "Θ": "Q",  "'": "'",  '"': '"',
-            ";": ";",  ":": ":",  "λ": "Λ",  "L": "L",
+            ";": ";",  ":": ":",  "λ": "l",  "Λ": "L",
             "κ": "k",  "Κ": "K",  "ϑ": "j",  "J": "J",
             "η": "h",  "Η": "H",  "γ": "g",  "Γ": "G",
             "φ": "f",  "Φ": "F",  "δ": "d",  "Δ": "D",
@@ -158,22 +186,20 @@ largecharDict = {
 # https://en.wikipedia.org/wiki/Tengwar http://freetengwar.sourceforge.net/mapping.html
 def invertdict(toinvert):
     inverted_dict = dict([[v,k] for k,v in toinvert.items()])
-    print(inverted_dict)
+    return(inverted_dict)
 
-def makeblock(mapDict, layoutDict):
+def makeblock(mapDict, layoutDictL, layoutDictU, layerthreeopt):
     block = ""
+    layerthreeopt =  invertdict(layerthreeopt)
     for val, key in mapDict.items():
-        layerone = layertwo = ""
-        keyfmt = "\tkey " + key + " {"
-        for key2, val2 in layoutDict.items():
+        layerone = layertwo = layerthree = ""
+        for key2, val2 in layoutDictL.items():
             if val == key2:
                 layerone = val2
-        for key2, val2 in layoutDict.items():
-            if val.capitalize() == key2:
-                layertwo = val2
-            #print(key2 + "," + val2 + "," + val)
-        #print("{} = {}".format(key, val))
-        block = block + keyfmt + "\t[ " + layerone + ", " + layertwo + " ]" + "};\n"
+                layertwo = layoutDictU[val2]
+                layerthree = layerthreeopt[val2]
+        keyfmt = "\tkey " + key + " {"
+        block = block + keyfmt + "\t[ " + layerone + ", " + layertwo + ", " + layerthree + " ]" + "};\n"
     return(block)
 
 
@@ -181,7 +207,7 @@ prefix1 = "xkb_symbols \"basic\""
 prefix2 = "\n{\n\tname[Group1] = "
 prefix3 = "\"{}\"".format(name)
 prefix = prefix1 + prefix2 + prefix3
-block = makeblock(mapDict, layoutDict)
+block = makeblock(mapDict, layoutDictL, layoutDictU, greekDict)
 postfix = "};"
 print(prefix)
 print(block)
