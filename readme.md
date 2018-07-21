@@ -25,25 +25,15 @@ Planed Help file (using as a roadmap for now)
 --help -- list this output
 
 1.  lowercase
-
 2.  uppercase
-
 3.  brackets
-
 4.  greek lowercase
-
-5.  greek uppercase
-    
+5.  greek uppercase  
 6.  math symbols
-
 7.  tengwar lowercase
-
 8.  tengwar uppercase
-
 9.  small-caps
-
 10.  upsidedown text
-
 11.  Blackboard bold
 ```
 
