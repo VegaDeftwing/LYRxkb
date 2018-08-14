@@ -1,7 +1,9 @@
 import os
 ## enter your keymap choice here, valid options are QWERTY and Dvorak
-layout = "QWERTY"
+layout = "DVORAK"
 name = "cadet"
+layerthreedependent = False
+unicodeOut = False
 
 mapDict = {
     "`": '<TLDE>',
@@ -59,6 +61,34 @@ mapDict = {
 # if you are using a key map not provided in this file it may be eaiset to
 # simple find how your board maps to qwerty and define it overtop the qwerty
 # definition
+
+# TODO redefnie qwerty map to include all necssary chars for valid
+# keymay according to dvo layout
+qwertyDict = {
+        "0": "0",  "1": "1",
+        "2": "2",  "3": "3",
+        "4": "4",  "5": "5",
+        "6": "6",  "7": "7",
+        "8": "8",  "9": "9",
+        "/": "/", "`": "`",
+        "=": "=", "]": "]",
+        "[": "[", "p": "p",
+        "o": "o", "i": "i",
+        "u": "u", "y": "y",
+        "t": "t", "r": "r",
+        "e": "e", "w": "w",
+        "q": "q", "'": "'",
+        ";": ";", "l": "l",
+        "k": "k", "j": "j",
+        "h": "h", "g": "g",
+        "f": "f", "d": "d",
+        "s": "s", "a": "a",
+        "/": "/", ".": ".",
+        ",": ",", "m": "m",
+        "n": "n", "b": "b",
+        "v": "v", "c": "c",
+        "x": "x", "z": "z",
+}
 if layout == "QWERTY":
     layoutDictL = {
         "0": "0",  "1": "1",
@@ -112,26 +142,80 @@ if layout == "QWERTY":
     }
 elif layout == "DVORAK":
     layoutDictL = {
-        "0": "0",  "1": "1",  "2": "2",  "3": "3",
-        "4": "4",  "5": "5",  "6": "6",  "7": "7",
-        "8": "8",  "9": "9",  "]": "/",  "}": "+",
-        "[": "=",  "{": "?",  "=": "]",  "+": "}",
-        "/": "[",  "?": "{",  "l": "p",  "L": "P",
-        "r": "o",  "R": "O",  "c": "i",  "C": "I",
-        "g": "u",  "G": "U",  "f": "y",  "F": "Y",
-        "y": "t",  "Y": "T",  "p": "r",  "P": "R",
-        ".": "e",  ">": "E",  ",": "w",  "<": "W",
-        "'": "q",  '"': "Q",  "-": "'",  "_": '"',
-        "s": ";",  "S": ":",  "n": "l",  "N": "L",
-        "t": "k",  "T": "K",  "h": "j",  "H": "J",
-        "d": "h",  "D": "H",  "i": "g",  "I": "G",
-        "u": "f",  "U": "F",  "e": "d",  "E": "D",
-        "o": "s",  "O": "S",  "a": "a",  "A": "A",
-        "z": "/",  "Z": "?",  "v": ".",  "V": ">",
-        "w": ",",  "W": "<",  "m": "m",  "M": "M",
-        "b": "n",  "B": "N",  "x": "b",  "X": "B",
-        "k": "v",  "K": "V",  "j": "c",  "J": "C",
-        "q": "x",  "Q": "X",  ";": "z",  ":": "Z",
+        "`":"`",
+        "1":"1",
+        "2":"2",
+        "3":"3",
+        "4":"4",
+        "5":"5",
+        "6":"6",
+        "7":"7",
+        "8":"8",
+        "9":"9",
+        "0":"0",
+        "-":"&",
+        "=":"=",
+        "q":"'",
+        "w":",",
+        "e":".",
+        "r":"p",
+        "t":"y",
+        "y":"f",
+        "u":"g",
+        "i":"c",
+        "o":"r",
+        "p":"l",
+        "[":"?",
+        "]":"+",
+        '\\':'\\',
+        "a":"a",
+        "s":"o",
+        "d":"e",
+        "f":"u",
+        "g":"i",
+        "h":"d",
+        "j":"h",
+        "k":"t",
+        "l":"n",
+        ";":"s",
+        "'":"-",
+        "z":";",
+        "x":"q",
+        "c":"j",
+        "v":"k",
+        "b":"x",
+        "n":"b",
+        "m":"m",
+        ",":"w",
+        ".":"v",
+        "/":"z",
+    }
+    layoutDictU = {
+        "1": "§",
+        "2": "@",  "3": "#",
+        "4": "№",  "5": "%",
+        "6": "$",  "7": "¢",
+        "8": "©",  "9": "™", "0": "●",
+        "/": "?", "`":"~", "-":"/", '\\':'|',
+        "=": "^", "]": "}",
+        "[": "{", "p": "P",
+        "o": "O", "i": "I",
+        "u": "U", "y": "Y",
+        "t": "T", "r": "R",
+        "e": "E", "w": "W",
+        "q": "Q", "'": '"',
+        ";": ":", "l": "L",
+        "k": "K", "j": "J",
+        "h": "H", "g": "G",
+        "f": "F", "d": "D",
+        "s": "S", "a": "A",
+        "/": "?", ".": "𐄂",
+        ",": "✓", "m": "M",
+        "n": "N", "b": "B",
+        "v": "V", "c": "C",
+        "x": "X", "z": "Z",
+        "&": "○", "?": "!",
+        "+": "*",
     }
 else:
     print("You need to speciy a valid layout!")
@@ -143,10 +227,11 @@ else:
 capsDict = {"a":"A","b":"B","c":"C","d":"D","e":"E","f":"F","g":"G","h":"H","i":"I","j":"J","k":"K","l":"L","m":"M","n":"N","o":"O","p":"P","q":"Q","r":"R","s":"S","t":"T","u":"U","v":"V","w":"W","x":"X","y":"Y","z":"Z",
 }
 # http://stevelosh.com/blog/2012/10/a-modern-space-cadet/
+# TODO break this into greekDictL and greekDictU
 greekDict = {
-            "0": "0",  "1": "1",  "2": "2",  "3": "3",
-            "4": "4",  "5": "5",  "6": "6",  "7": "7",
-            "8": "8",  "9": "9",  "/": "/",  "+": "+",
+            "Ⅹ": "0",  "Ⅰ": "1",  "Ⅱ": "2",  "Ⅲ": "3",
+            "Ⅳ": "4",  "Ⅴ": "5",  "Ⅵ": "6",  "Ⅶ": "7",
+            "Ⅷ": "8",  "Ⅸ": "9",  "/": "/",  "+": "+",
             "=": "=",  "?": "?",  "]": "]",  "}": "}",
             "[": "[",  "{": "{",  "π": "p",  "Π": "P",
             "ο": "o",  "Ο": "O",  "ι": "i",  "Ι": "I",
@@ -164,27 +249,75 @@ greekDict = {
             "ν": "n",  "Ν": "N",  "β": "b",  "Β": "B",
             "ς": "v",  "V": "V",  "χ": "c",  "Χ": "C",
             "ξ": "x",  "Ξ": "X",  "ζ": "z",  "Ζ": "Z",
-            "`": "`"
+            "`": "`",  "-": "-",  '\\':'\\',
 }
 # http://stevelosh.com/blog/2012/10/a-modern-space-cadet/
+#
+# The following symbolic dict should use a 'qwerty' layout in both Dvorak
+# and qwerty mode as the keymay is 'absolute'
 symbolicDict = {
-    "a":"α"
+            "`":"¡",
+            "0": "ⅹ",  "1": "ⅰ",
+            "2": "ⅱ",  "3": "ⅲ",
+            "4": "ⅳ",  "5": "ⅴ",
+            "6": "ⅵ",  "7": "ⅶ",
+            "8": "ⅷ",  "9": "ⅸ",
+            "-":"⎡",
+            "=":"⎤",
+            "q":"☐",
+            "w":"☑",
+            "e":"☒",
+            "r":"⎨",
+            "t":"⎬",
+            "y":"⎪",
+            "u":"⎧",
+            "i":"⎩",
+            "o":"⎫",
+            "p":"⎭",
+            "[":"⎣",
+            "]":"⎦",
+            '\\':'\\',
+            "a":"~",
+            "s":"`",
+            "d":"(",
+            "f":")",
+            "g":"<",
+            "h":">",
+            "j":"[",
+            "k":"]",
+            "l":"{",
+            ";":"}",
+            "'":"⎥",
+            "z":";",
+            "x":"q", # TODO finish latin mod keys
+            "c":"j",
+            "v":"k",
+            "b":"≤",
+            "n":"",
+            "m":"m",
+            ",":"︸",
+            ".":"︷",
+            "/":"⎢",
+            "&": "&",
+            "?": "?",
+            "+": "+",
 }
 
-# ᴀʙᴄᴅᴇғɢʜɪᴊᴋʟᴍɴᴏᴘǫʀsᴛᴜᴠᴡxʏᴢ
+# ᴀʙᴄᴅᴇғɢʜɪᴊᴋʟᴍɴᴏᴘǫʀsᴛᴜᴠᴡxʏᴢ #TODO
 tinyCapsDict = {
     "a":"α"
 }
-# ɐqɔpǝɟƃɥᴉɾʞlɯuodbɹsʇnʌʍxʎzƖᄅƐㄣϛ9ㄥ86¡⅋({
+# ɐqɔpǝɟƃɥᴉɾʞlɯuodbɹsʇnʌʍxʎzƖᄅƐㄣϛ9ㄥ86¡⅋({ #TODO
 upsidedownDict = {
     "a":"α"
 }
-# https://en.wikipedia.org/wiki/Blackboard_bold
+# https://en.wikipedia.org/wiki/Blackboard_bold #TODO
 largecharDict = {
     "a":"α"
 }
 
-# https://en.wikipedia.org/wiki/Tengwar http://freetengwar.sourceforge.net/mapping.html
+# https://en.wikipedia.org/wiki/Tengwar http://freetengwar.sourceforge.net/mapping.html #TODO
+
 def tounicode(key):
     if key == "":
         return("NoSymbol")
@@ -195,20 +328,25 @@ def invertdict(toinvert):
     inverted_dict = dict([[v,k] for k,v in toinvert.items()])
     return(inverted_dict)
 
-def makeblock(mapDict, layoutDictL, layoutDictU, layerthreeopt):
+greekDict = invertdict(greekDict)
+
+def makeblock(qwertyDict, layerthreedependent, unicodeOut, mapDict, layoutDictL, layoutDictU, layerthreeopt):
     block = ""
-    layerthreeopt =  invertdict(layerthreeopt)
     for val, key in mapDict.items():
         layerone = layertwo = layerthree = ""
-        for key2, val2 in layoutDictL.items():
-            if val == key2:
-                layerone = val2
-                layertwo = layoutDictU[val2]
-                layerthree = layerthreeopt[val2]
-        keyfmt = "\tkey " + key + " {"
-        layerone = tounicode(layerone)
-        layertwo = tounicode(layertwo)
-        layerthree = tounicode(layerthree)
+        for qw, lo in layoutDictL.items(): # qw stands for qwerty, lo for layout
+            if val == qw:
+                layerone = lo
+                layertwo = layoutDictU[lo]
+                if layerthreedependent == True:
+                    layerthree = layerthreeopt[lo]
+                else:
+                    layerthree = layerthreeopt[qw]
+            keyfmt = "\tkey " + key + " {"
+        if unicodeOut == True:
+            layerone = tounicode(layerone)
+            layertwo = tounicode(layertwo)
+            layerthree = tounicode(layerthree)
         block = block + keyfmt + "\t[ " + layerone + ", " + layertwo + ", " + layerthree + " ]" + "};\n"
     return(block)
 
@@ -217,7 +355,7 @@ prefix1 = "xkb_symbols \"basic\""
 prefix2 = "\n{\n\tname[Group1] = "
 prefix3 = "\"{}\"".format(name)
 prefix = prefix1 + prefix2 + prefix3
-block = makeblock(mapDict, layoutDictL, layoutDictU, greekDict)
+block = makeblock(qwertyDict, layerthreedependent, unicodeOut, mapDict, layoutDictL, layoutDictU, symbolicDict)
 postfix = "};"
 print(prefix)
 print(block)
