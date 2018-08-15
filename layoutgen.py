@@ -1,8 +1,8 @@
 import os, sys
 
 # OPTIONS NOT EXPOSED TO CLI
-name = "cadet"
-layerthreedependent = False
+name = "lyrxkb"
+layerthreedependent = False #Does layer3 depend on the layout (dvorak/qwerty)
 
 def showhelp():
     print("""
@@ -19,7 +19,7 @@ if "-h" in sys.argv:
 if "--help" in sys.argv:
     showhelp()
 
-if "-nu" in sys.argv:
+if "-nu" in sys.argv: #no unicode printing
     unicodeOut = False
 else:
     unicodeOut = True
@@ -33,13 +33,13 @@ elif "DVORAK" in sys.argv:
 else:
     print("Please speciy a keymap - either DVORAK or QWERTY (in all caps)")
     sys.exit()
-# This script must be run as root!
+# This script must be run as root to copy files to the install dir
 if "-nr" not in sys.argv:
     if not os.geteuid()==0:
         print("This script must be run as root \nin order to install the files")
         sys.exit('use -nr to disable root check')
 
-mapDict = {
+mapDict = { # Dict for actually making the xkb file
     "`": '<TLDE>',
     '1': '<AE01>',
     '2': '<AE02>',
@@ -86,7 +86,7 @@ mapDict = {
     ',': '<AB08>',
     '.': '<AB09>',
     '/': '<AB10>',
-    '\\': '<BKSL>',
+    '\\': '<BKSL>', #TODO add backspace, spacebar, modifier keys etc.
 }
 
 # if using US-Qwerty, then the layout as defined by the mapDict is technically
