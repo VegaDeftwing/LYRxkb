@@ -3,7 +3,7 @@ import os
 layout = "DVORAK"
 name = "cadet"
 layerthreedependent = False
-unicodeOut = False
+unicodeOut = True
 
 mapDict = {
     "`": '<TLDE>',
@@ -288,13 +288,13 @@ symbolicDict = {
             "l":"{",
             ";":"}",
             "'":"⎥",
-            "z":";",
-            "x":"q", # TODO finish latin mod keys
-            "c":"j",
-            "v":"k",
+            "z":"U0303",
+            "x":"U0308",
+            "c":"U0301",
+            "v":"U030b",
             "b":"≤",
-            "n":"",
-            "m":"m",
+            "n":"≥",
+            "m":"U0306",
             ",":"︸",
             ".":"︷",
             "/":"⎢",
@@ -305,7 +305,37 @@ symbolicDict = {
 
 # ᴀʙᴄᴅᴇғɢʜɪᴊᴋʟᴍɴᴏᴘǫʀsᴛᴜᴠᴡxʏᴢ #TODO
 tinyCapsDict = {
-    "a":"α"
+            "a":"ᴀ",
+            "b":"ʙ",
+            "c":"",
+            "d":"",
+            "e":"",
+            "f":"",
+            "g":"",
+            "h":"",
+            "i":"",
+            "j":"",
+            "k":"",
+            "l":"",
+            "m":"",
+            "n":"",
+            "o":"",
+            "p":"",
+            "q":"",
+            "r":"",
+            "s":"",
+            "t":"",
+            "u":"",
+            "v":"",
+            "w":"",
+            "x":"",
+            "y":"",
+            "z":"",
+            "1": "1", "2": "2",  "3": "3", "4": "4",  "5": "5",
+            "6": "6",  "7": "¢", "8": "8",  "9": "9", "0": "0",
+            "/": "/", "`":"`", "-":"-", '\\':'\\', "=": "=", "]": "]",
+            "[": "[", "'": "'", ";": ";", "/": "/", ".": ".",
+            ",": ",", "&": "&", "?": "?", "+": "+",
 }
 # ɐqɔpǝɟƃɥᴉɾʞlɯuodbɹsʇnʌʍxʎzƖᄅƐㄣϛ9ㄥ86¡⅋({ #TODO
 upsidedownDict = {
@@ -321,8 +351,10 @@ largecharDict = {
 def tounicode(key):
     if key == "":
         return("NoSymbol")
+    if len(key) >= 2:
+        return(key.upper())
     key = "U"+hex(ord(key))[2:].zfill(4)
-    return(key)
+    return(key.upper())
 
 def invertdict(toinvert):
     inverted_dict = dict([[v,k] for k,v in toinvert.items()])
@@ -347,14 +379,14 @@ def makeblock(qwertyDict, layerthreedependent, unicodeOut, mapDict, layoutDictL,
             layerone = tounicode(layerone)
             layertwo = tounicode(layertwo)
             layerthree = tounicode(layerthree)
-        block = block + keyfmt + "\t[ " + layerone + ", " + layertwo + ", " + layerthree + " ]" + "};\n"
+        block = block + keyfmt + " [ " + layerone + ", " + layertwo + ", " + layerthree + " ]\t" + "};\n"
     return(block)
 
 
 prefix1 = "xkb_symbols \"basic\""
 prefix2 = "\n{\n\tname[Group1] = "
 prefix3 = "\"{}\"".format(name)
-prefix = prefix1 + prefix2 + prefix3
+prefix = prefix1 + prefix2 + prefix3 + ";"
 block = makeblock(qwertyDict, layerthreedependent, unicodeOut, mapDict, layoutDictL, layoutDictU, symbolicDict)
 postfix = "};"
 print(prefix)
