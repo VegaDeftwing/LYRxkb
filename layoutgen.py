@@ -1,9 +1,43 @@
-import os
-## enter your keymap choice here, valid options are QWERTY and Dvorak
-layout = "DVORAK"
+import os, sys
+
+# OPTIONS NOT EXPOSED TO CLI
 name = "cadet"
 layerthreedependent = False
-unicodeOut = True
+
+def showhelp():
+    print("""
+    -nu              --- disable unicode conversion
+    QWERTY or DVORAK --- set keymap base
+    -nr              --- disable root check
+    -h or --help     --- show this help
+    -dry             --- dry run, don't do install
+    """)
+    sys.exit()
+
+if "-h" in sys.argv:
+    showhelp()
+if "--help" in sys.argv:
+    showhelp()
+
+if "-nu" in sys.argv:
+    unicodeOut = False
+else:
+    unicodeOut = True
+
+if "QWERTY" in sys.argv:
+    print("using QWERTY mode")
+    layout = "QWERTY" #TODO fix QWERTY mode
+elif "DVORAK" in sys.argv:
+    print("using DVORAK mode")
+    layout = "DVORAK"
+else:
+    print("Please speciy a keymap - either DVORAK or QWERTY (in all caps)")
+    sys.exit()
+# This script must be run as root!
+if "-nr" not in sys.argv:
+    if not os.geteuid()==0:
+        print("This script must be run as root \nin order to install the files")
+        sys.exit('use -nr to disable root check')
 
 mapDict = {
     "`": '<TLDE>',
@@ -382,13 +416,53 @@ def makeblock(qwertyDict, layerthreedependent, unicodeOut, mapDict, layoutDictL,
         block = block + keyfmt + " [ " + layerone + ", " + layertwo + ", " + layerthree + " ]\t" + "};\n"
     return(block)
 
+def doinstall(qwertyDict, layerthreedependent, mapDict, layoutDictL, layoutDictU, symbolicDict):
+    print("----------------Installing-------------------")
+    if os.path.isdir("/usr/share/X11/xkb/symbols/"):
+        print("Found Directory /usr/share/X11/xkb/symbols/")
+    else:
+        sys.exit(1)
+    if os.path.exists("/usr/share/X11/xkb/rules/evdev.xml"):
+        print("Found File /usr/share/X11/xkb/rules/evdev.xml")
+    else:
+        sys.exit(1)
+    # make the file to be installed
+    unicodeOut = True #force unicode mode on for actuall file gen
+    prefix1 = "xkb_symbols \"basic\""
+    prefix2 = "\n{\n\tname[Group1] = "
+    prefix3 = "\"{}\"".format(name)
+    block = prefix1 + prefix2 + prefix3 + ";"
+    print("Generating file...\t", end='')
+    block = block + makeblock(qwertyDict, layerthreedependent, unicodeOut, mapDict, layoutDictL, layoutDictU, symbolicDict)
+    block = block + "};"
+    print("✓")
+    # Write file
+    print("Writing file...\t\t", end='')
+    layoutfile = open("lyrxkbout", "w")
+    layoutfile.write(block)
+    layoutfile.close()
+    print("✓")
+    # Copy the file
+    print("Copying File...\t\t", end='')
+    print("✓")
+    # Create backup of rules file
+    # Add layout
+    print("----------------Completed--------------------")
+    print("Use setxkbmap lyrxkb to use the layout")
+    print("""
+    It may be a good idea to have setxkbmap US
+    (or whatever you normally use) in your history so
+    you can easily switch back if something went wrong
+    """)
 
-prefix1 = "xkb_symbols \"basic\""
-prefix2 = "\n{\n\tname[Group1] = "
-prefix3 = "\"{}\"".format(name)
-prefix = prefix1 + prefix2 + prefix3 + ";"
-block = makeblock(qwertyDict, layerthreedependent, unicodeOut, mapDict, layoutDictL, layoutDictU, symbolicDict)
-postfix = "};"
-print(prefix)
-print(block)
-print(postfix)
+
+if "-v" in sys.argv:
+    prefix1 = "xkb_symbols \"basic\""
+    prefix2 = "\n{\n\tname[Group1] = "
+    prefix3 = "\"{}\"".format(name)
+    block = prefix1 + prefix2 + prefix3 + ";"
+    block = block + makeblock(qwertyDict, layerthreedependent, unicodeOut, mapDict, layoutDictL, layoutDictU, symbolicDict)
+    block = block + "};"
+    print(block)
+if "-dry" not in sys.argv:
+    doinstall(qwertyDict, layerthreedependent, mapDict, layoutDictL, layoutDictU, symbolicDict)
