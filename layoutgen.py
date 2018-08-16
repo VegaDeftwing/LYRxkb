@@ -446,6 +446,8 @@ def doinstall(qwertyDict, layerthreedependent, mapDict, layoutDictL, layoutDictU
     print("Copying File...\t\t", end='')
     print("✓")
     # Create backup of rules file
+    print("Backing up rules file...\t\t", end='')
+    print("✓")
     # Add layout
     print("----------------Completed--------------------")
     print("Use setxkbmap lyrxkb to use the layout")

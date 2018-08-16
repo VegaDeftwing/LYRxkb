@@ -1,6 +1,6 @@
 xkb_symbols "basic"
 {
-	name[Group1] = "cadet";	key <TLDE> { [ U0060, U007E, U00A1 ]	};
+	name[Group1] = "lyrxkb";	key <TLDE> { [ U0060, U007E, U00A1 ]	};
 	key <AE01> { [ U0031, U00A7, U2170 ]	};
 	key <AE02> { [ U0032, U0040, U2171 ]	};
 	key <AE03> { [ U0033, U0023, U2172 ]	};
