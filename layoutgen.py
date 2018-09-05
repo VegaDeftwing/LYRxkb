@@ -199,7 +199,7 @@ elif layout == "DVORAK":
         "i":"c",
         "o":"r",
         "p":"l",
-        "[":"?",
+        "[":"/",
         "]":"+",
         '\\':'\\',
         "a":"a",
@@ -225,12 +225,12 @@ elif layout == "DVORAK":
         "/":"z",
     }
     layoutDictU = {
-        "1": "§",
+        "1": "!",
         "2": "@",  "3": "#",
         "4": "№",  "5": "%",
         "6": "$",  "7": "¢",
         "8": "©",  "9": "™", "0": "●",
-        "/": "?", "`":"~", "-":"/", '\\':'|',
+        "/": "?", "`":"~", "-":"_", '\\':'|',
         "=": "^", "]": "}",
         "[": "{", "p": "P",
         "o": "O", "i": "I",
@@ -243,12 +243,12 @@ elif layout == "DVORAK":
         "h": "H", "g": "G",
         "f": "F", "d": "D",
         "s": "S", "a": "A",
-        "/": "?", ".": "𐄂",
+        ".": "𐄂",
         ",": "✓", "m": "M",
         "n": "N", "b": "B",
         "v": "V", "c": "C",
         "x": "X", "z": "Z",
-        "&": "○", "?": "!",
+        "&": "§", "?": "!",
         "+": "*",
     }
 else:
@@ -438,7 +438,7 @@ def doinstall(qwertyDict, layerthreedependent, mapDict, layoutDictL, layoutDictU
     print("✓")
     # Write file
     print("Writing file...\t\t", end='')
-    layoutfile = open("lyrxkbout", "w")
+    layoutfile = open("lyrxkb", "w")
     layoutfile.write(block)
     layoutfile.close()
     print("✓")

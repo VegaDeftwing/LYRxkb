@@ -17,10 +17,10 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-LAYOUTFILE="test"
-SHORTDESC="test"
-DESCRIPTION="test"
-LANGUAGE="test"
+LAYOUTFILE="lyrxkb"
+SHORTDESC="lyrxkb"
+DESCRIPTION="lyrxkb"
+LANGUAGE="lyrxkb"
 
 ## This script must be run as root.
 if [ "$UID" -ne 0 ]
