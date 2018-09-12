@@ -380,6 +380,56 @@ largecharDict = {
     "a":"α"
 }
 
+mathDict = {
+            "`":"`",
+            "0": "0",  "1": "1",
+            "2": "2",  "3": "3",
+            "4": "4",  "5": "5",
+            "6": "6",  "7": "7",
+            "8": "8",  "9": "9",
+            "-":"≠",
+            "=":"=",
+            "q":"∫",
+            "w":"∠",
+            "e":"⇒",
+            "r":"⇔",
+            "t":"∝",
+            "y":"∃",
+            "u":"∄",
+            "i":"∀",
+            "o":"∧",
+            "p":"∨",
+            "[":"⊕",
+            "]":"≅",
+            '\\':'\\',
+            "a":"√",
+            "s":"¬",
+            "d":"∑",
+            "f":"±",
+            "g":"∞",
+            "h":"∅",
+            "j":"ℕ",
+            "k":"ℤ",
+            "l":"ℚ",
+            ";":"ℝ",
+            "'":"ℂ",
+            "z":"∈",
+            "x":"∋",
+            "c":"∉",
+            "v":"∌",
+            "b":"⊂",
+            "n":"⊃",
+            "m":"∩",
+            ",":"∪",
+            ".":"←",
+            "/":"→",
+            "&": "←",
+            "?": "→",
+            "+": "+",
+}
+
+
+
 # https://en.wikipedia.org/wiki/Tengwar http://freetengwar.sourceforge.net/mapping.html #TODO
 
 def tounicode(key):
@@ -459,10 +509,11 @@ def doinstall(qwertyDict, layerthreedependent, mapDict, layoutDictL, layoutDictU
 
 
 if "-v" in sys.argv:
+    includes = "include \"level3(caps_switch)\""
     prefix1 = "xkb_symbols \"basic\""
     prefix2 = "\n{\n\tname[Group1] = "
     prefix3 = "\"{}\"".format(name)
-    block = prefix1 + prefix2 + prefix3 + ";"
+    block = includes + prefix1 + prefix2 + prefix3 + ";"
     block = block + makeblock(qwertyDict, layerthreedependent, unicodeOut, mapDict, layoutDictL, layoutDictU, symbolicDict)
     block = block + "};"
     print(block)
