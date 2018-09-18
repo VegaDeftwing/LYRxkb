@@ -3,13 +3,13 @@
 # LYRxkb
 
 LYRxkb is a new Dvorak or Qwerty based keyboard layout for linux specifically designed
-for programming without a massive learnig curve. It was heavily inspired by the German [Neo layout](http://neo-layout.org).
+for programming without a massive learning curve. It was heavily inspired by the German [Neo layout](http://neo-layout.org).
 
-The layout is generated using layoutgen.py which can be used to realitively easily adapt the project into different base (Qwerty, Dvorak, etc) or change minor things in the layout, such as the layer order (which mod key does what)
+The layout is generated using layoutgen.py which can be used to relatively easily adapt the project into different bases (Qwerty, Dvorak, etc) or change minor things in the layout, such as the layer order (which mod key does what).
 
-While in development all of this will be hard coded into the file (though mostly at the begining)
+While in development all of this will be hard coded into the file (though mostly at the beginning).
 
-Planed Help file (using as a roadmap for now)
+Planed Help file (using as a road map for now)
 
 ```
 -p -- print the keymap to the standard output
