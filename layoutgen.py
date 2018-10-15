@@ -584,10 +584,10 @@ def invertdict(toinvert):
     inverted_dict = dict([[v,k] for k,v in toinvert.items()])
     return(inverted_dict)
 
-def makeblock(qwertyDict, layerthreedependent, unicodeOut, mapDict, layoutDictL, layoutDictU, layerthreeopt):
+def makeblock(qwertyDict, layerthreedependent, unicodeOut, mapDict, layoutDictL, layoutDictU, layerthreeopt, layerfouropt):
     block = ""
     for val, key in mapDict.items():
-        layerone = layertwo = layerthree = ""
+        layerone = layertwo = layerthree = layerfour = ""
         for qw, lo in layoutDictL.items(): # qw stands for qwerty, lo for layout
             if val == qw:
                 layerone = lo
@@ -596,15 +596,17 @@ def makeblock(qwertyDict, layerthreedependent, unicodeOut, mapDict, layoutDictL,
                     layerthree = layerthreeopt[lo]
                 else:
                     layerthree = layerthreeopt[qw]
+                layerfour = layerfouropt[lo]
             keyfmt = "\tkey " + key + " {"
         if unicodeOut == True:
             layerone = tounicode(layerone)
             layertwo = tounicode(layertwo)
             layerthree = tounicode(layerthree)
-        block = block + keyfmt + " [ " + layerone + ", " + layertwo + ", " + layerthree + " ]\t" + "};\n"
+            layerfour = tounicode(layerfour)
+        block = block + keyfmt + " [ " + layerone + ", " + layertwo + ", " + layerthree + ", " + layerfour + " ]\t" + "};\n"
     return(block)
 
-def doinstall(qwertyDict, layerthreedependent, mapDict, layoutDictL, layoutDictU, symbolicDict):
+def doinstall(qwertyDict, layerthreedependent, mapDict, layoutDictL, layoutDictU, symbolicDict, mathDict):
     print("----------------Installing-------------------")
     if os.path.isdir("/usr/share/X11/xkb/symbols/"):
         print("Found Directory /usr/share/X11/xkb/symbols/")
@@ -621,7 +623,7 @@ def doinstall(qwertyDict, layerthreedependent, mapDict, layoutDictL, layoutDictU
     prefix3 = "\"{}\"".format(name)
     block = prefix1 + prefix2 + prefix3 + ";"
     print("Generating file...\t", end='')
-    block = block + makeblock(qwertyDict, layerthreedependent, unicodeOut, mapDict, layoutDictL, layoutDictU, symbolicDict)
+    block = block + makeblock(qwertyDict, layerthreedependent, unicodeOut, mapDict, layoutDictL, layoutDictU, symbolicDict, mathDict)
     block = block + "};"
     print("✓")
     # Write file
@@ -652,8 +654,8 @@ if "-v" in sys.argv:
     prefix2 = "\n{\n\tname[Group1] = "
     prefix3 = "\"{}\"".format(name)
     block = includes + prefix1 + prefix2 + prefix3 + ";"
-    block = block + makeblock(qwertyDict, layerthreedependent, unicodeOut, mapDict, layoutDictL, layoutDictU, symbolicDict)
+    block = block + makeblock(qwertyDict, layerthreedependent, unicodeOut, mapDict, layoutDictL, layoutDictU, symbolicDict, mathDict)
     block = block + "};"
     print(block)
 if "-dry" not in sys.argv:
-    doinstall(qwertyDict, layerthreedependent, mapDict, layoutDictL, layoutDictU, symbolicDict)
+    doinstall(qwertyDict, layerthreedependent, mapDict, layoutDictL, layoutDictU, symbolicDict, mathDict)
