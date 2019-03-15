@@ -11,6 +11,8 @@ While in development all of this will be hard coded into the file (though mostly
 
 Planed Help file (using as a road map for now)
 
+Lyrxkb is also capable of kinda janky unicode -> qmk keymap.c file generation. Use at your own risk.
+
 ```
 -p -- print the keymap to the standard output
 -v -- list how the cli options set variables
