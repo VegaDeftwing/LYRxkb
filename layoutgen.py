@@ -31,6 +31,8 @@ if "QWERTY" in sys.argv:
 elif "DVORAK" in sys.argv:
     print("using DVORAK mode")
     layout = "DVORAK"
+elif "-q" in sys.argv:
+    layout = "QWERTY" #doesn't matter
 else:
     print("Please speciy a keymap - either DVORAK or QWERTY (in all caps)")
     sys.exit()
@@ -39,6 +41,9 @@ if "-nr" not in sys.argv:
     if not os.geteuid()==0:
         print("This script must be run as root \nin order to install the files")
         sys.exit('use -nr to disable root check')
+
+qmkLOne = ["ESC", "1", "2", "3", "4", "5", "`", "TT(15)", "6", "7", "8", "9", "0", "BSPC", "TAB", "'", ",", ".", "P", "Y", '\\', "PGUP", "F", "G", "C", "R", "L", "=", "/", "A", "O", "E", "U", "I", "D", "H", "T", "N", "S", "-", "LSPO", ";", "Q", "J", "K", "X", "/", "PGDN", "B", "M", "W", "V", "Z", "RSPC", "LEAD", "TT(1)", "TT(2)", "INS", "DEL", "RCTL", "RALT", "APP", "TT(3)", "TT(4)", "[", "HOME", "END", "]", "UP", "LEFT", "SPC", "LGUI", "DOWN", "RGHT", "ENT", "SPC"]
+    
 
 mapDict = { # Dict for actually making the xkb file
     "`": '<TLDE>',
@@ -624,7 +629,7 @@ def makeQNames(dictA, dictB):
                 s += chr(ord('A') + x - 26)
             else:
                 s += chr(ord('a') + x)
-        print(s, end ="")
+        print("\t" + s, end ="")
         print(",  // " + A + ":: " + B)
 
 def makeQmap(dictA, dictB):
@@ -638,27 +643,97 @@ def makeQmap(dictA, dictB):
                 s += chr(ord('A') + x - 26)
             else:
                 s += chr(ord('a') + x)
-        print("[" + s, end ="]")
+        print("\t[" + s, end ="]")
         print(" = 0x" + tounicode(B)[1:] + ",  // " + A + ":: " + B)
 
-def makeqmkline(qmkDict, uniDicta, uniDictb, uniDictc, uniDictd):
-    print("making QMK layout:")
-    print("-------------------------------------------")
+def getQhash(dictA, dictB, key):
+    s = ""
+    for A, B in dictB.items():
+        if A == key:
+            h = hashlib.sha1(B.encode("UTF-8"))
+            d = h.digest()
+            for i in range(0,8): 
+                x = d[i] % 52
+                if x >= 26:
+                    s += chr(ord('A') + x - 26)
+                else:
+                    s += chr(ord('a') + x)
+    return(s)
+
+def makeqmkline(qwertyDict, qmkLOne, uniDicta, uniDictb, uniDictc, uniDictd):
     print("enum unicode_names {")
 
     # Generate a hash of the unicode character to be used as a name. This is bad. I don't care.
-    makeQNames(qmkDict, uniDicta)
-    makeQNames(qmkDict, uniDictb)
-    makeQNames(qmkDict, uniDictc)
-    makeQNames(qmkDict, uniDictd)
-    print("\n};")
+    makeQNames(qwertyDict, uniDicta)
+    makeQNames(qwertyDict, uniDictb)
+    makeQNames(qwertyDict, uniDictc)
+    makeQNames(qwertyDict, uniDictd)
+    print("};")
 
     print("\nconst uint32_t PROGMEM unicode_map[] = {")
-    makeQmap(qmkDict, uniDicta)
-    makeQmap(qmkDict, uniDictb)
-    makeQmap(qmkDict, uniDictc)
-    makeQmap(qmkDict, uniDictd)
-    print("\n};")
+    makeQmap(qwertyDict, uniDicta)
+    makeQmap(qwertyDict, uniDictb)
+    makeQmap(qwertyDict, uniDictc)
+    makeQmap(qwertyDict, uniDictd)
+    print("};\n")
+
+    qmkLa = []
+    qmkLb = []
+    qmkLc = []
+    qmkLd = []
+
+    print("[1] = LAYOUT_ergodox_pretty(")
+    for key in qmkLOne:
+        print("\t", end ="")
+        keyHash = getQhash(qwertyDict, uniDicta, key.lower())
+        if keyHash != "":
+            print("X(" + keyHash + "), //" + key.lower())
+        else:
+            if key[:-3] == "TT":
+                print("TT(" + str(0) + "),")
+            else:
+                print("KC_" + key + ",")
+    print(")")
+
+    print("[2] = LAYOUT_ergodox_pretty(")
+    for key in qmkLOne:
+        print("\t", end ="")
+        keyHash = getQhash(qwertyDict, uniDictb, key.lower())
+        if keyHash != "":
+            print("X(" + keyHash + "), //" + key.lower())
+        else:
+            if key[:-3] == "TT":
+                print("TT(" + str(0) + "),")
+            else:
+                print("KC_" + key + ",")
+    print(")")
+
+    print("[3] = LAYOUT_ergodox_pretty(")
+    for key in qmkLOne:
+        print("\t", end ="")
+        keyHash = getQhash(qwertyDict, uniDictc, key.lower())
+        if keyHash != "":
+            print("X(" + keyHash + "), //" + key.lower())
+        else:
+            if key[:-3] == "TT":
+                print("TT(" + str(0) + "),")
+            else:
+                print("KC_" + key + ",")
+    print(")")
+
+    print("[4] = LAYOUT_ergodox_pretty(")
+    for key in qmkLOne:
+        print("\t", end ="")
+        keyHash = getQhash(qwertyDict, uniDictd, key) #greekDictU needs uppercase
+        if keyHash != "":
+            print("X(" + keyHash + "), //" + key.lower())
+        else:
+            if key[:-3] == "TT":
+                print("TT(" + str(0) + "),")
+            else:
+                print("KC_" + key + ",")
+    print(")")
+
 
 def doinstall(qwertyDict, layerthreedependent, mapDict, layoutDictL, layoutDictU, symbolicDict, mathDict, upsidedownDict):
     print("----------------Installing-------------------")
@@ -715,4 +790,4 @@ if "-dry" not in sys.argv:
     doinstall(qwertyDict, layerthreedependent, mapDict, layoutDictL, layoutDictU, symbolicDict, mathDict, upsidedownDict)
 
 if "-q" in sys.argv:
-    makeqmkline(qwertyDict, mathDict, symbolicDict, greekDictL, greekDictU )
+    makeqmkline(qwertyDict, qmkLOne, mathDict, symbolicDict, greekDictL, greekDictU )
