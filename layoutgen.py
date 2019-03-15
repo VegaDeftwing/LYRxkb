@@ -1,4 +1,5 @@
 import os, sys
+import hashlib
 
 # OPTIONS NOT EXPOSED TO CLI
 name = "lyrxkb"
@@ -464,6 +465,10 @@ tinyCapsDict = {
 }
 
 upsidedownDict = {
+"&": "&",
+"+": "+",
+"-": "-",
+"\\":"\\",
 "/": "¡",
 "`": "`",
 "=": "⅋",
@@ -584,10 +589,10 @@ def invertdict(toinvert):
     inverted_dict = dict([[v,k] for k,v in toinvert.items()])
     return(inverted_dict)
 
-def makeblock(qwertyDict, layerthreedependent, unicodeOut, mapDict, layoutDictL, layoutDictU, layerthreeopt, layerfouropt):
+def makeblock(qwertyDict, layerthreedependent, unicodeOut, mapDict, layoutDictL, layoutDictU, layerthreeopt, layerfouropt, layerfiveopt):
     block = ""
     for val, key in mapDict.items():
-        layerone = layertwo = layerthree = layerfour = ""
+        layerone = layertwo = layerthree = layerfour = layerfive = ""
         for qw, lo in layoutDictL.items(): # qw stands for qwerty, lo for layout
             if val == qw:
                 layerone = lo
@@ -597,16 +602,65 @@ def makeblock(qwertyDict, layerthreedependent, unicodeOut, mapDict, layoutDictL,
                 else:
                     layerthree = layerthreeopt[qw]
                 layerfour = layerfouropt[lo]
+                layerfive = layerfiveopt[lo]
             keyfmt = "\tkey " + key + " {"
         if unicodeOut == True:
             layerone = tounicode(layerone)
             layertwo = tounicode(layertwo)
             layerthree = tounicode(layerthree)
             layerfour = tounicode(layerfour)
+            layerfive = tounicode(layerfive)
         block = block + keyfmt + " [ " + layerone + ", " + layertwo + ", " + layerthree + ", " + layerfour + " ]\t" + "};\n"
     return(block)
 
-def doinstall(qwertyDict, layerthreedependent, mapDict, layoutDictL, layoutDictU, symbolicDict, mathDict):
+def makeQNames(dictA, dictB):
+    for A, B in dictB.items():
+        h = hashlib.sha1(B.encode("UTF-8"))
+        d = h.digest()
+        s = ""
+        for i in range(0,8): 
+            x = d[i] % 52
+            if x >= 26:
+                s += chr(ord('A') + x - 26)
+            else:
+                s += chr(ord('a') + x)
+        print(s, end ="")
+        print(",  // " + A + ":: " + B)
+
+def makeQmap(dictA, dictB):
+    for A, B in dictB.items():
+        h = hashlib.sha1(B.encode("UTF-8"))
+        d = h.digest()
+        s = ""
+        for i in range(0,8): 
+            x = d[i] % 52
+            if x >= 26:
+                s += chr(ord('A') + x - 26)
+            else:
+                s += chr(ord('a') + x)
+        print("[" + s, end ="]")
+        print(" = 0x" + tounicode(B)[1:] + ",  // " + A + ":: " + B)
+
+def makeqmkline(qmkDict, uniDicta, uniDictb, uniDictc, uniDictd):
+    print("making QMK layout:")
+    print("-------------------------------------------")
+    print("enum unicode_names {")
+
+    # Generate a hash of the unicode character to be used as a name. This is bad. I don't care.
+    makeQNames(qmkDict, uniDicta)
+    makeQNames(qmkDict, uniDictb)
+    makeQNames(qmkDict, uniDictc)
+    makeQNames(qmkDict, uniDictd)
+    print("\n};")
+
+    print("\nconst uint32_t PROGMEM unicode_map[] = {")
+    makeQmap(qmkDict, uniDicta)
+    makeQmap(qmkDict, uniDictb)
+    makeQmap(qmkDict, uniDictc)
+    makeQmap(qmkDict, uniDictd)
+    print("\n};")
+
+def doinstall(qwertyDict, layerthreedependent, mapDict, layoutDictL, layoutDictU, symbolicDict, mathDict, upsidedownDict):
     print("----------------Installing-------------------")
     if os.path.isdir("/usr/share/X11/xkb/symbols/"):
         print("Found Directory /usr/share/X11/xkb/symbols/")
@@ -623,7 +677,7 @@ def doinstall(qwertyDict, layerthreedependent, mapDict, layoutDictL, layoutDictU
     prefix3 = "\"{}\"".format(name)
     block = prefix1 + prefix2 + prefix3 + ";"
     print("Generating file...\t", end='')
-    block = block + makeblock(qwertyDict, layerthreedependent, unicodeOut, mapDict, layoutDictL, layoutDictU, symbolicDict, mathDict)
+    block = block + makeblock(qwertyDict, layerthreedependent, unicodeOut, mapDict, layoutDictL, layoutDictU, symbolicDict, mathDict, upsidedownDict)
     block = block + "};"
     print("✓")
     # Write file
@@ -654,8 +708,11 @@ if "-v" in sys.argv:
     prefix2 = "\n{\n\tname[Group1] = "
     prefix3 = "\"{}\"".format(name)
     block = includes + prefix1 + prefix2 + prefix3 + ";"
-    block = block + makeblock(qwertyDict, layerthreedependent, unicodeOut, mapDict, layoutDictL, layoutDictU, symbolicDict, mathDict)
+    block = block + makeblock(qwertyDict, layerthreedependent, unicodeOut, mapDict, layoutDictL, layoutDictU, symbolicDict, mathDict, upsidedownDict)
     block = block + "};"
     print(block)
 if "-dry" not in sys.argv:
-    doinstall(qwertyDict, layerthreedependent, mapDict, layoutDictL, layoutDictU, symbolicDict, mathDict)
+    doinstall(qwertyDict, layerthreedependent, mapDict, layoutDictL, layoutDictU, symbolicDict, mathDict, upsidedownDict)
+
+if "-q" in sys.argv:
+    makeqmkline(qwertyDict, mathDict, symbolicDict, greekDictL, greekDictU )
