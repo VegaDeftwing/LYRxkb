@@ -1,6 +1,8 @@
+**This repo has been all-but abandoned in favor of using a hardware keyboard running [QMK](https://github.com/qmk/qmk_firmware). This layout heavily inspired the layout I made for my Ergodox (Ergodone clone) keyboard which can be found in the QMK repo [here (keymap.c)](https://github.com/qmk/qmk_firmware/blob/master/keyboards/ergodone/keymaps/vega/keymap.c).**
+
 ![Logo](lyrxkb.jpg)
 
-This repo has been all-but abandoned in favor of using a hardware keyboard running [QMK](https://github.com/qmk/qmk_firmware). This layout heavily inspired the layout I made for my Ergodox (Ergodone clone) keyboard which can be found in the QMK repo [here (keymap.c)](https://github.com/qmk/qmk_firmware/blob/master/keyboards/ergodone/keymaps/vega/keymap.c).
+---
 
 # LYRxkb
 
